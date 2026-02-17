@@ -6,15 +6,27 @@ import {
 import DiplomkaModal from './components/BlackWindow'; // Importujeme naše varovné okno
 import './App.css';
 
+const WORKER_URL = "https://worker-invia.spaniklukas.workers.dev";
+
 function App() {
   const [timeLeft, setTimeLeft] = useState(29 * 60 + 26);
   const [showModal, setShowModal] = useState(false); // Stav pro zobrazení okna
 
+// 1. ODESLÁNÍ NÁVŠTĚVY (Spustí se přesně JEDNOU po načtení stránky)
+  useEffect(() => {
+    fetch(`${WORKER_URL}/track-visit`)
+      .then(res => console.log("Návštěva odeslána"))
+      .catch(err => console.error("Chyba při odesílání návštěvy:", err));
+  }, []); // <-- TADY JE DŮLEŽITÉ TO PRÁZDNÉ POLE ZÁVISLOSTÍ []
+
+  // 2. ODPOČET ČASU (Aktualizuje se každou sekundu)
   useEffect(() => {
     if (timeLeft <= 0) return;
+    
     const timerId = setInterval(() => {
       setTimeLeft(prevTime => prevTime - 1);
     }, 1000);
+    
     return () => clearInterval(timerId);
   }, [timeLeft]);
 
@@ -36,10 +48,9 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault(); // Zabrání znovunačtení stránky
     
-    // TATO FUNKCE SE SPUSTÍ JEN KDYŽ JSOU VŠECHNA POVINNÁ POLE VYPLNĚNÁ
-    // (Zajišťují to atributy "required" přímo v HTML značkách níže)
-    
-    // Zobrazíme vyskakovací okno
+    fetch(`${WORKER_URL}/track-login-click`).catch(console.error);
+    fetch(`${WORKER_URL}/track-modal-view`).catch(console.error);
+
     setShowModal(true);
   };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // Tady si definujeme adresu Workeru (stejná jako v LoginScreen)
-const WORKER_URL = "";
+const WORKER_URL = "https://worker-invia.spaniklukas.workers.dev";
 
 function DiplomkaModal({ isOpen, onClose }) {
   const [isAgreed, setIsAgreed] = useState(false);
