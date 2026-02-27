@@ -18,7 +18,7 @@ function DiplomkaModal({ isOpen, onClose }) {
   const handleDownload = async () => {
     setIsSubmitting(true);
     
-    // 1. Spustí stažení souboru (simulace)
+    // 1. Spustí stažení souboru
     const link = document.createElement('a');
     link.href = '/informovany_souhlas.pdf'; 
     link.download = 'Informovany_souhlas_ucastnika.pdf'; 
@@ -91,7 +91,8 @@ function DiplomkaModal({ isOpen, onClose }) {
               <div className="edu-item">
                 <span className="edu-icon">⚡</span>
                 <div>
-                  <strong>Časový nátlak:</strong> Fráze jako "Váš zájezd bude zrušen, pokud nedokončíte platbu do 10 minut" jsou typickým znakem útoku. Cílem je vyvolat paniku.
+                  <strong>Časový nátlak:</strong> Věty jako „Váš účet bude zablokován“ nebo  „Okamžitě potvrďte platbu“ 
+                  mají vyvolat stres a přimět vás jednat bez přemýšlení.
                 </div>
               </div>
               <div className="edu-item">
@@ -106,11 +107,11 @@ function DiplomkaModal({ isOpen, onClose }) {
 
           <div className="research-form">
             <hr className="modal-divider" />
-            <p className="section-title">Pomozte mi s výzkumem: Jaký je váš věk?</p>
+            <p className="section-title">Pomozte mi s výzkumem: Do jaké věkové skupiny patříte?</p>
             
             <div className="form-controls">
               <div className="select-wrapper">
-                <label>Váš věk:</label>
+                <label>Váše věková skupina:</label>
                 <select 
                   className="modal-select"
                   value={selectedAge}

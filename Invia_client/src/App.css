@@ -204,6 +204,8 @@ a:hover { text-decoration: underline; }
   margin-bottom: 20px;
 }
 
+/* Sekce se zárukou bezpečnosti */
+
 .security-guarantee {
   background: rgba(0, 200, 81, 0.1);
   padding: 20px;
@@ -238,6 +240,8 @@ a:hover { text-decoration: underline; }
   margin-bottom: 20px;
   text-align: center;
 }
+
+/* Edukační sekce */
 
 .edu-grid {
   display: grid;
