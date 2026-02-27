@@ -3,14 +3,14 @@
 body { margin: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f4f6f9; color: #333; }
 a { color: #007bff; text-decoration: none; }
 a:hover { text-decoration: underline; }
-.req { color: #e77716; } /* Oranžová hvězdička u povinných polí */
+.req { color: #e77716; } 
 
 /* --- HLAVIČKA --- */
 .main-header { background-color: #004b87; color: white; padding: 10px 0; }
 .header-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
 .logo { font-size: 28px; font-weight: bold; }
 .header-logo-img {
-  height: 55px; /* Tady si můžeš upravit velikost podle toho, jak to bude vypadat nejlépe */
+  height: 55px; 
   width: auto;
   display: block;
 }
@@ -52,7 +52,7 @@ a:hover { text-decoration: underline; }
 .input-group input, .input-group select { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; color: #333; }
 .input-group input:focus, .input-group select:focus { border-color: #00a0e3; outline: none; box-shadow: 0 0 0 2px rgba(0, 160, 227, 0.2); }
 
-/* Specifická rozložení polí (podle obrázku) */
+/* Rozložení polí */
 .three-cols > .input-group { flex: 1; }
 .two-cols-uneven > .input-group:first-child { flex: 1; }
 .date-group { flex: 2; }
@@ -67,7 +67,7 @@ a:hover { text-decoration: underline; }
 
 .divider { height: 1px; background-color: #e0e0e0; margin: 30px 0; border: none; }
 
-/* Zvýrazněná Phishing pole */
+
 .highlight-row { background-color: #fdfaf0; padding: 15px; border-left: 4px solid #e77716; margin-bottom: 15px; border-radius: 0 4px 4px 0; }
 
 .privacy-notice { font-size: 13px; color: #666; text-align: center; margin: 30px 0; line-height: 1.5; }
@@ -80,11 +80,11 @@ a:hover { text-decoration: underline; }
 .summary-timer { display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; margin-bottom: 20px; }
 .summary-timer .time { color: #e77716; }
 
-/* Nový styl pro fotku hotelu */
+
 .hotel-image {
   width: 100%;
-  height: 200px; /* Pevná výška, aby to neposkakovalo */
-  object-fit: cover; /* Ořízne fotku, aby vyplnila prostor a nedeformovala se */
+  height: 200px; 
+  object-fit: cover; 
   border-radius: 4px;
   margin-bottom: 15px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -93,7 +93,7 @@ a:hover { text-decoration: underline; }
 /* Animace pro odpočet (jemné červené blikání, když dochází čas) */
 .ticking-timer {
   color: #e77716;
-  font-variant-numeric: tabular-nums; /* Aby čísla neskákala, když se mění šířka */
+  font-variant-numeric: tabular-nums; 
 }
 
 .hotel-title { font-size: 18px; color: #00a0e3; margin: 0 0 5px; line-height: 1.3; }

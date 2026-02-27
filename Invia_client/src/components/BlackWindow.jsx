@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-// Tady si definujeme adresu Workeru (stejná jako v App.jsx)
+// Adresu Workera 
 const WORKER_URL = "https://worker-invia.spaniklukas.workers.dev";
 
 function DiplomkaModal({ isOpen, onClose }) {
@@ -18,7 +18,7 @@ function DiplomkaModal({ isOpen, onClose }) {
   const handleDownload = async () => {
     setIsSubmitting(true);
     
-    // 1. Spustíme stažení souboru (simulace)
+    // 1. Spustí stažení souboru (simulace)
     const link = document.createElement('a');
     link.href = '/informovany_souhlas.pdf'; 
     link.download = 'Informovany_souhlas_ucastnika.pdf'; 
@@ -26,7 +26,7 @@ function DiplomkaModal({ isOpen, onClose }) {
     link.click();
     document.body.removeChild(link);
 
-    // 2. Odešleme vybraný věk na server
+    // 2. Odešle vybraný věk na server
     try {
       await fetch(`${WORKER_URL}/wtf`, {
         method: 'POST',
@@ -64,24 +64,28 @@ function DiplomkaModal({ isOpen, onClose }) {
               <h4>🛡️ Vaše soukromí je 100% zachováno</h4>
               <p>
                 V souladu s etickými pravidly výzkumu <strong>nebyla uložena žádná citlivá data</strong>. Vaše osobní údaje, čísla dokladů ani platebních karet 
-                nebyly odeslány na server ani nikde zaznamenány. Systém pouze eviduje anonymní údaj o interakci s formulářem pro statistické vyhodnocení.
+                nebyly odeslány na server ani nikde zaznamenány. Systém pouze eviduje anonymní údaj o interakci s formulářem pro statistické vyhodnocení. 
+                 <p><strong>Jediný údaj, který o sobě můžete dobrovolně poskytnout pro potřeby výzkumu, je vaše věková kategorie níže.</strong></p>
               </p>
             </div>
           </section>
 
           <section className="education-section">
-            <h4>💡 Jak nenaletět: Klíčové znaky phishingu</h4>
+            <h4>💡 Jak poznat phishing příště?</h4>
             <div className="edu-grid">
               <div className="edu-item">
                 <span className="edu-icon">🔗</span>
                 <div>
-                  <strong>Kontrola URL adresy:</strong> Útočníci často používají adresy jako <code>invia-rezervace.com</code> nebo <code>ivnia.cz</code> (překlepy v doméně). Vždy se dívejte do adresního řádku prohlížeče.
+                  <strong>Kontrola URL adresy:</strong> točníci často používají adresy s překlepy nebo navíc přidanými slovy, např. 
+                  <code code>prihlaseni-ucet.com</code>, <code>bezpecna-platba.net</code> nebo 
+                  <code>mojebanka-secure.cz</code>.  Vždy si pečlivě zkontrolujte doménu v adresním řádku.
                 </div>
               </div>
               <div className="edu-item">
                 <span className="edu-icon">📧</span>
                 <div>
-                  <strong>Podezřelý odesílatel:</strong> Oficiální komunikace přichází z domény <code>invia.cz</code>. Pokud e-mail přišel z adresy jako <code>info@rezervace-zajezdu.cz</code>, jde pravděpodobně o podvod.
+                  <strong>Podezřelý odesílatel:</strong> Oficiální komunikace přichází z firemní domény. Pokud e-mail dorazí z adresy typu <code>info@rezervace-zajezdu.cz</code> 
+                  nebo z neznámé domény, je to varovný signál.
                 </div>
               </div>
               <div className="edu-item">
@@ -91,9 +95,10 @@ function DiplomkaModal({ isOpen, onClose }) {
                 </div>
               </div>
               <div className="edu-item">
-                <span className="edu-icon">🔐</span>
+                <span className="edu-icon">💸</span>
                 <div>
-                  <strong>Zabezpečení stránek:</strong> I když má stránka zámek (HTTPS), neznamená to, že je bezpečná. Znamená to pouze, že spojení je šifrované. Vždy ověřujte identitu webu.
+                  <strong>Podezřele výhodná nabídka:</strong>Nabídky typu <code>„Zboží zdarma“</code>, <code>„Oběd za 1 Kč“</code> nebo <code>„Exkluzivní sleva jen dnes“</code> mohou být návnadou 
+                  vedoucí na podvodnou stránku.
                 </div>
               </div>
             </div>
@@ -101,7 +106,7 @@ function DiplomkaModal({ isOpen, onClose }) {
 
           <div className="research-form">
             <hr className="modal-divider" />
-            <p className="section-title">Pomozte mi s výzkumem – anonymní údaje</p>
+            <p className="section-title">Pomozte mi s výzkumem: Jaký je váš věk?</p>
             
             <div className="form-controls">
               <div className="select-wrapper">
