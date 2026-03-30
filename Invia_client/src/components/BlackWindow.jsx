@@ -1,156 +1,162 @@
 import React, { useState } from 'react';
+import { ShieldCheck, Lightbulb, FileText, Mail, Phone, GraduationCap } from 'lucide-react';
 
-// Adresu Workera 
-const WORKER_URL = "https://worker-invia.spaniklukas.workers.dev";
+// Tady si definujeme adresu Workeru (stejná jako v LoginScreen)
+const WORKER_URL = "https://anton-databaze.spaniklukas.workers.dev";
 
 function DiplomkaModal({ isOpen, onClose }) {
   const [isAgreed, setIsAgreed] = useState(false);
   const [selectedAge, setSelectedAge] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
   const ageGroups = [
-    "Méně než 18", "18 - 24", "25 - 34", "35 - 44",
+    "Méně než 17", "18 - 24", "25 - 34", "35 - 44",
     "45 - 54", "55 - 64", "65 a více"
   ];
 
   const handleDownload = async () => {
-    setIsSubmitting(true);
-    
-    // 1. Spustí stažení souboru
-    const link = document.createElement('a');
-    link.href = '/informovany_souhlas.pdf'; 
-    link.download = 'Informovany_souhlas_ucastnika.pdf'; 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    // 2. Odešle vybraný věk na server
     try {
-      await fetch(`${WORKER_URL}/wtf`, {
-        method: 'POST',
-        keepalive: true,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ age: selectedAge })
-      });
-      console.log("Statistická data byla úspěšně odeslána.");
+      // 1. Spuštění stahování souboru
+      const link = document.createElement('a');
+      link.href = '/informovany_souhlas.pdf'; 
+      link.download = 'Informovany_souhlas_ucastnika.pdf'; 
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // 2. Získání identifikátoru školy z URL
+      const currentPath = window.location.pathname.replace('/', ''); 
+      const schoolId = currentPath !== '' ? currentPath : 'nezadano';
+
+      // 3. Odeslání dat na Worker (pokud je adresa vyplněná a není to jen prázdný text)
+      if (WORKER_URL && WORKER_URL !== "") {
+        await fetch(`${WORKER_URL}/wtf`, {
+          method: 'POST',
+          keepalive: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            age: selectedAge,
+            school: schoolId,
+            timestamp: new Date().toISOString() 
+          })
+        });
+        console.log(`Statistika věku odeslána pro školu: ${schoolId}`);
+      }
     } catch (err) {
-      console.error("Chyba při odesílání dat:", err);
+      console.error("Chyba při zpracování:", err);
+    } finally {
+      onClose();
     }
-    
-    setIsSubmitting(false);
-    onClose();
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <header className="modal-header">
-          <div className="warning-icon">⚠️</div>
-          <h3>Pozor: Toto byla simulace phishingového útoku</h3>
-        </header>
+
+        <h3>Právě jste se stali součástí simulovaného testování v rámci <strong>diplomové práce</strong>.</h3>
         
-        <div className="modal-body">
-          <section className="modal-info-section">
-            <p className="modal-text">
-              Právě jste interagovali s testovací stránkou vytvořenou pro účely <strong>výzkumu v rámci diplomové práce</strong>. 
-              Tato stránka pouze napodobuje vzhled portálu Invia, aby demonstrovala, jak snadno lze vytvořit věrohodnou kopii známého webu.
+        <div className="modal-info-section">
+          <p className="modal-text">
+            Tato stránka není skutečným přihlašovacím portálem. Jedná se o <strong>bezpečnou simulaci</strong> v rámci výzkumu pro mou diplomovou práci.
+          </p>
+          
+          <div className="security-guarantee">
+            <h4><ShieldCheck size={28} color="#34d399" /> Vaše údaje jsou v naprostém bezpečí</h4>
+            <p>
+              Vaše <strong>osobní údaje, čísla dokladů ani platebních karet nebyly nikde uloženy ani odeslány</strong>. 
+              Tato simulace slouží výhradně k anonymnímu sběru statistik pro vědecké účely. 
             </p>
-            
-            <div className="security-guarantee">
-              <h4>🛡️ Vaše soukromí je 100% zachováno</h4>
-              <p>
-                V souladu s etickými pravidly výzkumu <strong>nebyla uložena žádná citlivá data</strong>. Vaše osobní údaje, čísla dokladů ani platebních karet 
-                nebyly odeslány na server ani nikde zaznamenány. Systém pouze eviduje anonymní údaj o interakci s formulářem pro statistické vyhodnocení. 
-                 <p><strong>Jediný údaj, který o sobě můžete dobrovolně poskytnout pro potřeby výzkumu, je vaše věková kategorie níže.</strong></p>
-              </p>
-            </div>
-          </section>
+          </div>
+        </div>
 
-          <section className="education-section">
-            <h4>💡 Jak poznat phishing příště?</h4>
-            <div className="edu-grid">
-              <div className="edu-item">
-                <span className="edu-icon">🔗</span>
-                <div>
-                  <strong>Kontrola URL adresy:</strong> točníci často používají adresy s překlepy nebo navíc přidanými slovy, např. 
+          <div className="education-section">
+            <h4><Lightbulb size={24} color="#34d399" style={{ verticalAlign: 'middle', marginRight: '10px' }} /> Jak se příště nenechat napálit?</h4>
+            <ul className="edu-list">
+              <li><strong>Zkontrolujte adresu (URL):</strong> Skutečné systémy mají jasnou a oficiální adresu. točníci často používají adresy s překlepy nebo navíc přidanými slovy, např. 
                   <code code>prihlaseni-ucet.com</code>, <code>bezpecna-platba.net</code> nebo 
-                  <code>mojebanka-secure.cz</code>.  Vždy si pečlivě zkontrolujte doménu v adresním řádku.
-                </div>
-              </div>
-              <div className="edu-item">
-                <span className="edu-icon">📧</span>
-                <div>
-                  <strong>Podezřelý odesílatel:</strong> Oficiální komunikace přichází z firemní domény. Pokud e-mail dorazí z adresy typu <code>info@rezervace-zajezdu.cz</code> 
-                  nebo z neznámé domény, je to varovný signál.
-                </div>
-              </div>
-              <div className="edu-item">
-                <span className="edu-icon">⚡</span>
-                <div>
-                  <strong>Časový nátlak:</strong> Věty jako „Váš účet bude zablokován“ nebo  „Okamžitě potvrďte platbu“ 
-                  mají vyvolat stres a přimět vás jednat bez přemýšlení.
-                </div>
-              </div>
-              <div className="edu-item">
-                <span className="edu-icon">💸</span>
-                <div>
-                  <strong>Podezřele výhodná nabídka:</strong>Nabídky typu <code>„Zboží zdarma“</code>, <code>„Oběd za 1 Kč“</code> nebo <code>„Exkluzivní sleva jen dnes“</code> mohou být návnadou 
-                  vedoucí na podvodnou stránku.
-                </div>
-              </div>
+                  <code>mojebanka-secure.cz</code>.  Vždy si pečlivě zkontrolujte doménu v adresním řádku.</li>
+              <li><strong>Podezřelý odesílatel:</strong> Vždy si ověřte, z jaké e-mailové adresy vám přišla výzva k přihlášení.</li>
+              <li><strong>Nátlak a urgentnost:</strong> Phishing často straší (např. "Váš účet bude zablokován"), aby vás přiměl jednat bez přemýšlení.</li>
+              <li><strong>Podezřele výhodná nabídka:</strong> Nabídky typu <code>„Zboží zdarma“</code>, <code>„Oběd za 1 Kč“</code> nebo <code>„Exkluzivní sleva jen dnes“</code> mohou být návnadou 
+                  vedoucí na podvodnou stránku.</li>
+            </ul>
+          </div>
+
+        {/* --- KONTAKTY --- */}
+        <div className="contact-section">
+          <div className="contact-card">
+            <h5>Zástupce ředitele školy</h5>
+            <div className="contact-item">
+              <Mail size={16} color="#34d399" />
+              <a href="mailto:Marek.Houzar@zsantoninska.cz">Marek.Houzar@zsantoninska.cz</a>
             </div>
-          </section>
-
-          <div className="research-form">
-            <hr className="modal-divider" />
-            <p className="section-title">Pomozte mi s výzkumem: Do jaké věkové skupiny patříte?</p>
-            
-            <div className="form-controls">
-              <div className="select-wrapper">
-                <label>Váše věková skupina:</label>
-                <select 
-                  className="modal-select"
-                  value={selectedAge}
-                  onChange={(e) => setSelectedAge(e.target.value)}
-                >
-                  <option value="" disabled>Vyberte věkovou skupinu...</option>
-                  {ageGroups.map((age) => (
-                    <option key={age} value={age}>{age} let</option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="agreement-wrapper">
-                <label className="checkbox-container">
-                  <input 
-                    type="checkbox" 
-                    checked={isAgreed}
-                    onChange={(e) => setIsAgreed(e.target.checked)}
-                  />
-                  Souhlasím se zapojením do anonymního výzkumu
-                </label>
-              </div>
+            <div className="contact-item">
+              <Phone size={16} color="#34d399" />
+              <a href="tel:+420 530 508 980">+420 530 508 980</a>
+            </div>
+          </div>
+          
+          <div className="contact-card">
+            <h5>Autor výzkumu</h5>
+            <div className="contact-item">
+              <Mail size={16} color="#34d399" />
+              <a href="mailto:lukas.spanik@unob.cz">lukas.spanik@unob.cz</a>
+            </div>
+            <div className="contact-item">
+              <GraduationCap size={16} color="#34d399" />
+              <span>rtm. Lukáš Špánik</span>
             </div>
           </div>
         </div>
 
-        <footer className="modal-footer">
-          <p className="small-note">Kliknutím dokončíte simulaci a stáhnete Informovaný souhlas (PDF).</p>
+        <hr className="modal-divider" />
+
+        <div className="age-selection-section">
+          <p className="section-title">Pomozte mi s výzkumem: Do jaké věkové skupiny patříte?</p>
+          <select 
+            className="modal-select"
+            value={selectedAge}
+            onChange={(e) => setSelectedAge(e.target.value)}
+          >
+            <option value="" disabled>Vyberte prosím věkovou skupinu...</option>
+            {ageGroups.map((age) => (
+              <option key={age} value={age}>
+                {age} let
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="agreement-wrapper">
+          <label className="checkbox-container">
+            <input 
+              type="checkbox" 
+              checked={isAgreed}
+              onChange={(e) => setIsAgreed(e.target.checked)}
+            />
+            Souhlasím se zapojením do anonymního výzkumu
+          </label>
+        </div>
+
+        <div className="modal-footer">
+          <p className="small-note">Kliknutím na tlačítko stáhnete informovaný souhlas a okno se zavře.</p>
           <button 
             onClick={handleDownload} 
             className="close-btn"
-            disabled={!isAgreed || !selectedAge || isSubmitting} 
+            disabled={!isAgreed || !selectedAge} 
           >
-            {isSubmitting ? 'Odesílám...' : 'Dokončit a stáhnout PDF'}
+            <FileText size={20} style={{ verticalAlign: 'middle', marginRight: '10px' }} />
+            Stáhnout dokument a dokončit
           </button>
-          <p className="github-info">
-            Kód projektu je dostupný na <a href="https://github.com/Spana21/Invia_Phi" target="_blank" rel="noopener noreferrer" className="github-link">GitHubu</a>.
+          
+          <p className="github-info" style={{ marginTop: '30px' }}>
+            Projekt je plně transparentní a zdrojový kód je dostupný na 
+            <a href="https://github.com/Spana21/Invia_Phi" target="_blank" rel="noopener noreferrer" className="github-link"> GitHubu</a>.
           </p>
-        </footer>
+        </div>
       </div>
     </div>
   );

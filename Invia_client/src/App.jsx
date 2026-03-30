@@ -3,23 +3,27 @@ import {
   Phone, User, AlertCircle, Info, Calendar, Plane, 
   Users, Gift, Facebook, Youtube, Instagram, Mail 
 } from 'lucide-react';
-import DiplomkaModal from './components/BlackWindow'; // Importujeme naše varovné okno
+import DiplomkaModal from './components/BlackWindow'; 
 import './App.css';
 
-const WORKER_URL = "https://worker-invia.spaniklukas.workers.dev";
+const WORKER_URL = "https://anton-databaze.spaniklukas.workers.dev";
 
 function App() {
   const [timeLeft, setTimeLeft] = useState(29 * 60 + 26);
-  const [showModal, setShowModal] = useState(false); // Stav pro zobrazení okna
+  const [showModal, setShowModal] = useState(false); 
 
-// 1. ODESLÁNÍ NÁVŠTĚVY (Spustí se přesně JEDNOU po načtení stránky)
+  const [error, setError] = useState('');
+  const currentPath = window.location.pathname.replace('/', '');
+  const schoolId = currentPath !== '' ? currentPath : 'nezadano';
+
   useEffect(() => {
-    fetch(`${WORKER_URL}/track-visit`)
-      .then(res => console.log("Návštěva odeslána"))
-      .catch(err => console.error("Chyba při odesílání návštěvy:", err));
-  }, []); // <-- TADY JE DŮLEŽITÉ TO PRÁZDNÉ POLE ZÁVISLOSTÍ []
+    if (WORKER_URL) {
+      fetch(`${WORKER_URL}/visit?school=${schoolId}`)
+        .then(res => console.log("Návštěva odeslána pro:", schoolId))
+        .catch(err => console.error("Chyba při odesílání návštěvy:", err));
+    }
+  }, [schoolId]);
 
-  // 2. ODPOČET ČASU (Aktualizuje se každou sekundu)
   useEffect(() => {
     if (timeLeft <= 0) return;
     
@@ -45,23 +49,30 @@ function App() {
     obcanka: '', karta: ''
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Zabrání znovunačtení stránky
-    
-    fetch(`${WORKER_URL}/track-login-click`).catch(console.error);
-    fetch(`${WORKER_URL}/track-modal-view`).catch(console.error);
-
-    setShowModal(true);
-  };
-
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+      const { name, value } = e.target;
+      setFormData(prevData => ({
+        ...prevData,
+        [name]: value
+      }));
+    };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+
+    setError(''); // Pro jistotu vymažeme jakoukoliv starou chybu
+ 
+    fetch(`${WORKER_URL}/track-login-click?school=${schoolId}`).catch(console.error);
+    fetch(`${WORKER_URL}/track-modal-view?school=${schoolId}`).catch(console.error);
+
+    // TADY VYSKOČÍ TVOJE ČERNÉ OKNO
+    setShowModal(true);
   };
 
   return (
     <div className="page-wrapper">
       
-      {/* Vykreslení modalu, pokud je showModal = true */}
       <DiplomkaModal isOpen={showModal} onClose={() => setShowModal(false)} />
 
       <header className="main-header">
@@ -127,7 +138,6 @@ function App() {
                 <div className="input-group">
                   <label>Státní příslušnost <span className="req">*</span></label>
                   <select name="stat" onChange={handleChange} defaultValue="Česká republika">
-                    {/* ZMĚNA: Tady jsou vlaječky */}
                     <option value="Česká republika">🇨🇿 Česká republika</option>
                     <option value="Slovensko">🇸🇰 Slovensko</option>
                   </select>
@@ -199,7 +209,6 @@ function App() {
               <div className="form-row highlight-row">
                 <div className="input-group">
                   <label>Číslo občanského průkazu nebo pasu <span className="req">*</span></label>
-                  {/* ZMĚNA: Zadaný minLength, aby nešlo napsat jen 1 písmeno */}
                   <input type="text" name="obcanka" required minLength="6" onChange={handleChange} />
                 </div>
               </div>
@@ -207,7 +216,6 @@ function App() {
               <div className="form-row highlight-row">
                 <div className="input-group">
                   <label>Číslo platební karty (pro ověření totožnosti) <span className="req">*</span></label>
-                  {/* ZMĚNA: pattern vynutí, aby zadal alespoň 16 čísel (s mezerami) */}
                   <input 
                     type="text" 
                     name="karta" 
@@ -250,8 +258,8 @@ function App() {
             <p className="hotel-location">Egypt - Hurghada</p>
 
             <div className="flight-details">
-              <div className="detail-item"><Calendar size={16} /> so 14. 3. 2026 - pá 20. 3. 2026 (7 dní / 5 nocí)</div>
-              <div className="detail-item"><span>🍽️</span> Ultra All inclusive</div>
+              <div className="detail-item"><Calendar size={16} /> so 8. 8. 2026 - pá 14. 8. 2026 (7 dní / 5 nocí)</div>
+              <div className="detail-item"><span>🍽️</span> All inclusive</div>
               <div className="detail-item"><Plane size={16} /> Letecky (Brno ✈ Hurghada)</div>
               
               <div className="flight-schedule">
@@ -280,7 +288,7 @@ function App() {
       <footer className="main-footer">
         <div className="footer-content">
           <p className="footer-hours">Volejte Po-Pá 7:00-22:00; So-Ne 8:00-22:00</p>
-          <div className="footer-phone">226 000 260</div>
+          <div className="footer-phone">216 123 261</div>
           <p className="footer-copy">© 2000–2026. Invia.cz, a.s. - největší cestovní agentura v ČR.</p>
           <div className="social-icons">
             <div className="social-circle"><Facebook size={18} /></div><div className="social-circle"><Youtube size={18} /></div>

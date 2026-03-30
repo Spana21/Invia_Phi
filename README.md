@@ -28,7 +28,7 @@ Uživatelské rozhraní vytvořené v prostředí **React + Vite**.
 - Navrženo tak, aby věrně kopírovalo vzhled a proces rezervace zájezdu.
 - Po kliknutí na tlačítko pro pokračování/dokončení zobrazuje edukační modální okno.
 
-### ⚙️ 2. Backend / Worker (`worker-invia/`)
+### ⚙️ 2. Backend / Worker 
 Serverová část běžící na technologii **Cloudflare Workers**.
 - Zajišťuje bezpečné a anonymní započítávání návštěv a interakcí.
 - Spravuje statistiky (počet zobrazení, kliknutí na tlačítka, věkové skupiny).

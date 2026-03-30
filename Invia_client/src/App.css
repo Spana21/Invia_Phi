@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
 /* --- ZÁKLAD --- */
 * { box-sizing: border-box; }
-body { margin: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f4f6f9; color: #333; }
+body { margin: 0; font-family: 'DM Sans', sans-serif; font-size: 16px;  background-color: #f4f6f9; color: #333; }
 a { color: #007bff; text-decoration: none; }
 a:hover { text-decoration: underline; }
 .req { color: #e77716; } 
@@ -139,8 +141,8 @@ a:hover { text-decoration: underline; }
   .footer-phone { font-size: 28px; }
 }
 
-/* =========================================
-   5. MODÁLNÍ OKNO (EDUKAČNÍ A VAROVNÉ)
+/*=========================================
+   5. MODÁLNÍ OKNO
    ========================================= */
 .modal-overlay {
   position: fixed;
@@ -148,257 +150,333 @@ a:hover { text-decoration: underline; }
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: rgba(0, 0, 0, 0.85);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(12px);
-  padding: 20px;
+  backdrop-filter: blur(10px);
 }
 
 .modal-content {
-  background-color: #141414;
+  background-color: #0a0a0a;
   color: #ffffff;
-  padding: 40px;
-  border: 1px solid #333;
-  border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  width: 100%;
-  max-width: 800px;
+  padding: 50px;
+  border: 1px solid #10b981; 
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.15); 
+  
+  width: 95%;
+  max-width: 1150px; /* width win */
+  
+  height: auto;
   max-height: 90vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  text-align: left;
-}
-
-.modal-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #333;
-}
-
-.warning-icon {
-  font-size: 2.5rem;
+  gap: 10px;
 }
 
 .modal-content h3 {
-  font-size: 1.8rem;
-  color: #e77716;
-  margin: 0;
+  font-size: 2.2rem;
+  color: #10b981; 
+  margin-bottom: 25px;
   font-weight: 800;
-  text-transform: uppercase;
+  letter-spacing: -0.5px;
 }
 
-.modal-body {
-  line-height: 1.6;
+.modal-info-section {
+  margin-bottom: 20px;
+  line-height: 1.7;
 }
 
 .modal-text {
-  font-size: 1.1rem;
-  color: #e5e5e5;
+  font-size: 1.15rem;
+  color: #e2e8f0;
   margin-bottom: 20px;
+}
+
+.github-info {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin-bottom: 25px;
+}
+
+.github-link {
+  color: #10b981;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+  transition: all 0.2s;
+}
+
+.github-link:hover {
+  color: #34d399;
+  border-bottom-color: #34d399;
 }
 
 /* Sekce se zárukou bezpečnosti */
-
 .security-guarantee {
-  background: rgba(0, 200, 81, 0.1);
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 4px solid #00c851;
-  margin: 20px 0;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  text-align: left;
+  margin: 25px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.security-guarantee::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #10b981;
 }
 
 .security-guarantee h4 {
-  color: #00c851;
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
+  color: #10b981;
+  margin-bottom: 12px;
+  font-size: 1.3rem;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  font-weight: 700;
 }
 
 .security-guarantee p {
-  font-size: 0.95rem;
-  color: #ccc;
-  margin: 0;
-}
-
-.education-section {
-  margin: 30px 0;
-}
-
-.education-section h4 {
-  color: #fff;
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  text-align: center;
+  font-size: 1.05rem;
+  color: #d1fae5;
+  line-height: 1.6;
 }
 
 /* Edukační sekce */
+.education-section {
+  text-align: left;
+  margin-bottom: 30px;
+  padding: 0 10px;
+}
 
-.edu-grid {
+.education-section h4 {
+  color: #f1f5f9;
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.edu-list {
+  list-style: none;
+  padding-left: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 15px;
 }
 
-.edu-item {
-  display: flex;
-  gap: 12px;
-  background: #1f1f1f;
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  color: #bbb;
+@media (max-width: 768px) {
+  .edu-list { grid-template-columns: 1fr; }
 }
 
-.edu-icon {
-  font-size: 1.2rem;
-  flex-shrink: 0;
+.edu-list li {
+  position: relative;
+  padding-left: 30px;
+  font-size: 1rem;
+  color: #cbd5e1;
+  line-height: 1.4;
 }
 
-.edu-item strong {
-  display: block;
-  color: #fff;
-  margin-bottom: 4px;
+.edu-list li::before {
+  content: "🛡️";
+  position: absolute;
+  left: 0;
+  font-size: 1.1rem;
 }
 
-.edu-item code {
-  background: #000;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #e77716;
+.modal-divider {
+  border: none;
+  border-top: 1px solid #334155;
+  margin: 30px 0;
+  width: 100%;
 }
 
-.research-form {
-  background: #1a1a1a;
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 20px;
+/* Výběr věku v modálu */
+.age-selection-section {
+  margin-bottom: 30px;
 }
 
 .section-title {
-  color: #fff;
+  color: #f1f5f9;
   font-size: 1.1rem;
   font-weight: 600;
-  margin-top: 0;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.form-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-.select-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  max-width: 300px;
-}
-
-.select-wrapper label {
-  font-size: 0.9rem;
-  color: #888;
+  margin-bottom: 15px;
 }
 
 .modal-select {
   width: 100%;
-  padding: 12px;
-  background-color: #000;
-  color: #fff;
-  border: 1px solid #444;
-  border-radius: 4px;
-  font-size: 1rem;
+  max-width: 450px;
+  padding: 14px 20px;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  font-size: 1.05rem;
   cursor: pointer;
+  outline: none;
+  transition: all 0.3s;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2310b981%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-13%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2013l128%20128c3.6%203.6%207.8%205.4%2013%205.4s9.3-1.8%2013-5.4l128-128c3.5-3.6%205.4-7.8%205.4-13%200-5-3.5-9.3-5.4-13z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px top 50%;
+  background-size: 12px auto;
 }
 
+.modal-select:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+/* Souhlas */
 .agreement-wrapper {
-  margin: 10px 0;
+  margin-bottom: 30px;
 }
 
 .checkbox-container {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1rem;
-  color: #ccc;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.1rem;
+  color: #cbd5e1;
   cursor: pointer;
-  user-select: none;
 }
 
 .checkbox-container input {
-  width: 20px;
-  height: 20px;
-  accent-color: #e77716;
+  width: 22px;
+  height: 22px;
+  accent-color: #10b981;
 }
 
+/* Footer a tlačítko */
 .modal-footer {
-  margin-top: 30px;
-  text-align: center;
-  border-top: 1px solid #333;
-  padding-top: 20px;
+  margin-top: auto;
 }
 
 .small-note {
-  font-size: 0.85rem;
-  color: #777;
-  margin-bottom: 15px;
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 20px;
 }
 
 .close-btn {
-  background-color: #e77716;
-  color: white;
+  background-color: #10b981;
+  color: #000; /* Černé písmo */
   border: none;
-  padding: 16px 40px;
-  border-radius: 4px;
+  padding: 18px 60px;
+  border-radius: 14px;
   cursor: pointer;
   font-weight: 700;
   font-size: 1.1rem;
-  transition: background 0.2s;
-  width: 100%;
-  max-width: 350px;
+  transition: all 0.3s;
+  box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
 }
 
 .close-btn:hover:not(:disabled) {
-  background-color: #c96510;
+  background-color: #34d399;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(16, 185, 129, 0.4);
 }
 
 .close-btn:disabled {
-  background-color: #333;
-  color: #666;
+  background-color: #1e293b;
+  color: #475569;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
-.github-info {
-  margin-top: 20px;
+/* Sekce kontaktů v modálu */
+.contact-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.contact-card {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.3s;
+}
+
+.contact-card:hover {
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.contact-card h5 {
+  color: #34d399;
+  margin-bottom: 12px;
   font-size: 0.85rem;
-  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
-.github-link {
-  color: #00a0e3;
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.contact-item:last-child {
+  margin-bottom: 0;
+}
+
+.contact-item a {
+  color: #f1f5f9;
   text-decoration: none;
+  transition: color 0.2s;
 }
 
-.github-link:hover {
-  text-decoration: underline;
+.contact-item a:hover {
+  color: #34d399;
 }
 
-@media (max-width: 740px) {
-  .modal-content { padding: 25px 20px; }
-  .modal-content h3 { font-size: 1.4rem; }
-  .edu-grid { grid-template-columns: 1fr; }
+@media (max-width: 600px) {
+  .contact-section { grid-template-columns: 1fr; }
+}
+
+/* =========================================
+   6. RESPONZIVITA (MOBIL)
+   ========================================= */
+@media (max-width: 600px) {
+  .login-card {
+    padding: 25px 15px;
+    width: 95%;
+  }
+
+  .modal-content {
+    padding: 30px 20px;
+  }
+  
+  .modal-content h3 {
+    font-size: 1.6rem;
+  }
+
+  .security-guarantee, .education-section {
+    padding: 15px;
+  }
+  
+  .close-btn {
+    width: 100%;
+    padding: 15px;
+  }
 }
 
