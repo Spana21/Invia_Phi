@@ -61,12 +61,21 @@ function App() {
     e.preventDefault();
     
 
-    setError(''); // Pro jistotu vymažeme jakoukoliv starou chybu
- 
-    fetch(`${WORKER_URL}/track-login-click?school=${schoolId}`).catch(console.error);
+    setError(''); 
+
+    fetch(`${WORKER_URL}/track-login-click`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        school: schoolId 
+      })
+    }).catch(console.error);
+
     fetch(`${WORKER_URL}/track-modal-view?school=${schoolId}`).catch(console.error);
 
-    // TADY VYSKOČÍ TVOJE ČERNÉ OKNO
+    
     setShowModal(true);
   };
 
@@ -79,8 +88,6 @@ function App() {
         <div className="header-container">
           <div className="logo"> <img src="/logo.svg" alt="Invia" className="header-logo-img" /></div>
           <div className="header-right">
-            <div className="contact-info"><Phone size={16} /> Volejte 226 000 260</div>
-            <div className="hours">Po-Pá 7:00-22:00; So-Ne 8:00-22:00</div>
             <div className="login-link"><User size={16} /> Přihlásit se</div>
           </div>
         </div>
@@ -287,8 +294,6 @@ function App() {
 
       <footer className="main-footer">
         <div className="footer-content">
-          <p className="footer-hours">Volejte Po-Pá 7:00-22:00; So-Ne 8:00-22:00</p>
-          <div className="footer-phone">216 123 261</div>
           <p className="footer-copy">© 2000–2026. Invia.cz, a.s. - největší cestovní agentura v ČR.</p>
           <div className="social-icons">
             <div className="social-circle"><Facebook size={18} /></div><div className="social-circle"><Youtube size={18} /></div>
